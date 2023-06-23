@@ -40,6 +40,28 @@ public class PokemonServiceImpl implements PokemonService {
 
 
 
+    private PokemonDto mapToDto(Pokemon pokemon){
+
+        PokemonDto pokemonDto1 = new PokemonDto();
+
+        pokemonDto1.setId(pokemon.getId());
+        pokemonDto1.setName(pokemon.getName());
+        pokemonDto1.setType(pokemon.getType());
+
+        return pokemonDto1;
+    }
+
+    private Pokemon mapToPokemon(PokemonDto pokemonDto){
+
+        Pokemon pokemon = new Pokemon();
+
+        pokemon.setId(pokemonDto.getId());
+        pokemon.setName(pokemonDto.getName());
+        pokemon.setType(pokemonDto.getType());
+
+        return pokemon;
+    }
+
 
 
 
