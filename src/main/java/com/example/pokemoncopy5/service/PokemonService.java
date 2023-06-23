@@ -6,4 +6,6 @@ public interface PokemonService {
 
 
     PokemonDto createPokemon(PokemonDto pokemonDto);
+
+    PokemonDto getPokemonById(int id);
 }

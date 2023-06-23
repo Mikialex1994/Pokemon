@@ -2,6 +2,7 @@ package com.example.pokemoncopy5.service.impl;
 
 import com.example.pokemoncopy5.dto.PokemonDto;
 import com.example.pokemoncopy5.entity.Pokemon;
+import com.example.pokemoncopy5.exception.PokemonNotFoundException;
 import com.example.pokemoncopy5.repository.PokemonRepository;
 import com.example.pokemoncopy5.service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,15 @@ public class PokemonServiceImpl implements PokemonService {
         return pokemonDto1;
     }
 
+    @Override
+    public PokemonDto getPokemonById(int id) {
+
+        Pokemon pokemon = pokemonRepository.findById(id)
+                .orElseThrow(() ->new PokemonNotFoundException("Pokemon with associated id not found "));
+
+        return mapToDto(pokemon);
+
+    }
 
 
     private PokemonDto mapToDto(Pokemon pokemon){
