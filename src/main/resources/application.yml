@@ -1,0 +1,30 @@
+server:
+  port:8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/pokemoncopyfive
+    username: root
+    password: MiKi1994@
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mikias01alemayehu@gmail.com
+    password: ftcvflptnsxngeog
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+
+
