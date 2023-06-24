@@ -1,12 +1,18 @@
 package com.example.pokemoncopy5.service.impl;
 
 import com.example.pokemoncopy5.dto.PokemonDto;
+import com.example.pokemoncopy5.dto.PokemonResponse;
 import com.example.pokemoncopy5.entity.Pokemon;
 import com.example.pokemoncopy5.exception.PokemonNotFoundException;
 import com.example.pokemoncopy5.repository.PokemonRepository;
 import com.example.pokemoncopy5.service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PokemonServiceImpl implements PokemonService {
@@ -47,6 +53,28 @@ public class PokemonServiceImpl implements PokemonService {
 
         return mapToDto(pokemon);
 
+    }
+
+    @Override
+    public PokemonResponse getAllPokmeon(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+
+        Page<Pokemon> pokemon = pokemonRepository.findAll(pageable);
+
+        List<Pokemon> listOfPokemon = pokemon.getContent();
+
+        List<PokemonDto> content = listOfPokemon.stream().map(this::mapToDto).toList();
+
+        PokemonResponse pokemonResponse = new PokemonResponse();
+        pokemonResponse.setContent(content);
+        pokemonResponse.setPageNo(pokemon.getNumber());
+        pokemonResponse.setPageSize(pokemon.getSize());
+        pokemonResponse.setTotalElements(pokemon.getTotalElements());
+        pokemonResponse.setTotalPages(pokemon.getTotalPages());
+        pokemonResponse.setLast(pokemon.isLast());
+
+        return pokemonResponse;
     }
 
 
