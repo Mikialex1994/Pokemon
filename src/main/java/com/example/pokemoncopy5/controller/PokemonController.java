@@ -39,4 +39,12 @@ public class PokemonController {
 
     }
 
+    @PutMapping("pokemon/{id}/update")
+    public ResponseEntity<PokemonDto> updatePokemon(@RequestBody PokemonDto pokemonDto, @PathVariable("id") int pokemonId){
+
+        PokemonDto response = pokemonService.updatePokemon(pokemonDto,pokemonId);
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
 }
