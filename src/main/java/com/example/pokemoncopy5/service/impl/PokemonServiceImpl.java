@@ -39,6 +39,75 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
 
+<<<<<<< Updated upstream
+=======
+        Pokemon pokemon = pokemonRepository.findById(id)
+                .orElseThrow(() ->new PokemonNotFoundException("Pokemon with associated id not found "));
+
+        return mapToDto(pokemon);
+
+    }
+
+    @Override
+    public PokemonResponse getAllPokmeon(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+
+        Page<Pokemon> pokemon = pokemonRepository.findAll(pageable);
+
+        List<Pokemon> listOfPokemon = pokemon.getContent();
+
+        List<PokemonDto> content = listOfPokemon.stream().map(this::mapToDto).toList();
+
+        PokemonResponse pokemonResponse = new PokemonResponse();
+        pokemonResponse.setContent(content);
+        pokemonResponse.setPageNo(pokemon.getNumber());
+        pokemonResponse.setPageSize(pokemon.getSize());
+        pokemonResponse.setTotalElements(pokemon.getTotalElements());
+        pokemonResponse.setTotalPages(pokemon.getTotalPages());
+        pokemonResponse.setLast(pokemon.isLast());
+
+        return pokemonResponse;
+    }
+
+    @Override
+    public PokemonDto updatePokemon(PokemonDto pokemonDto, int pokemonId) {
+
+        Pokemon pokemon = pokemonRepository.findById(pokemonId)
+                .orElseThrow(()-> new PokemonNotFoundException("Pokemon could Not be Updated"));
+
+        pokemon.setName(pokemonDto.getName());
+        pokemon.setType(pokemonDto.getType());
+
+        Pokemon updatePokemon = pokemonRepository.save(pokemon);
+
+        return mapToDto(updatePokemon);
+
+    }
+
+
+    private PokemonDto mapToDto(Pokemon pokemon){
+
+        PokemonDto pokemonDto1 = new PokemonDto();
+
+        pokemonDto1.setId(pokemon.getId());
+        pokemonDto1.setName(pokemon.getName());
+        pokemonDto1.setType(pokemon.getType());
+
+        return pokemonDto1;
+    }
+
+    private Pokemon mapToPokemon(PokemonDto pokemonDto){
+
+        Pokemon pokemon = new Pokemon();
+
+        pokemon.setId(pokemonDto.getId());
+        pokemon.setName(pokemonDto.getName());
+        pokemon.setType(pokemonDto.getType());
+
+        return pokemon;
+    }
+>>>>>>> Stashed changes
 
 
 

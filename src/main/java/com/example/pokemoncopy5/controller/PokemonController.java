@@ -24,4 +24,29 @@ public class PokemonController {
 
     }
 
+<<<<<<< Updated upstream
+=======
+    @GetMapping("pokemon/{id}")
+    public ResponseEntity<PokemonDto> pokemonDetail(@PathVariable(value = "id") int id){
+
+        return new ResponseEntity<>(pokemonService.getPokemonById(id),HttpStatus.OK);
+    }
+
+    @GetMapping("pokemon")
+    public ResponseEntity<PokemonResponse> getPokemon(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+                                                      @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize){
+
+        return new ResponseEntity<>(pokemonService.getAllPokmeon(pageNo,pageSize),HttpStatus.OK);
+
+    }
+
+    @PutMapping("pokemon/{id}/update")
+    public ResponseEntity<PokemonDto> updatePokemon(@RequestBody PokemonDto pokemonDto, @PathVariable("id") int pokemonId){
+
+        PokemonDto response = pokemonService.updatePokemon(pokemonDto,pokemonId);
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+>>>>>>> Stashed changes
 }
