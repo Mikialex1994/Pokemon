@@ -13,4 +13,6 @@ public interface PokemonService {
     PokemonResponse getAllPokmeon(int pageNo, int pageSize);
 
     PokemonDto updatePokemon(PokemonDto pokemonDto, int pokemonId);
+
+    void deletePokemon(int pokemonId);
 }

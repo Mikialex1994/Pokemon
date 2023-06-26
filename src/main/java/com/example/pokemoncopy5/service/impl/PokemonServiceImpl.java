@@ -92,6 +92,16 @@ public class PokemonServiceImpl implements PokemonService {
 
     }
 
+    @Override
+    public void deletePokemon(int pokemonId) {
+
+        Pokemon pokemon = pokemonRepository.findById(pokemonId)
+                .orElseThrow(()-> new PokemonNotFoundException("Pokemon with associated id not found"));
+
+        pokemonRepository.delete(pokemon);
+
+    }
+
 
     private PokemonDto mapToDto(Pokemon pokemon){
 
