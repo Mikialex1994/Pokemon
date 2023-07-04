@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/")
 public class ReviewController {
@@ -22,6 +24,12 @@ public class ReviewController {
     public ResponseEntity<ReviewDto> createReview(@RequestBody ReviewDto reviewDto, @PathVariable(value = "pokemonId") int pokemonId){
 
         return new ResponseEntity<>(reviewService.createReview(pokemonId,reviewDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("pokemon/{pokemonId}/reviews")
+    public List<ReviewDto> getReviewsByPokemonId(@PathVariable(value = "pokemonId") int pokemonId){
+
+        return reviewService.getReviewsByPokemonId(pokemonId);
     }
 
 }
