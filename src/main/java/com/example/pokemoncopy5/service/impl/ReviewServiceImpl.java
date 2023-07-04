@@ -4,6 +4,7 @@ import com.example.pokemoncopy5.dto.ReviewDto;
 import com.example.pokemoncopy5.entity.Pokemon;
 import com.example.pokemoncopy5.entity.Review;
 import com.example.pokemoncopy5.exception.PokemonNotFoundException;
+import com.example.pokemoncopy5.exception.ReviewNotFoundException;
 import com.example.pokemoncopy5.repository.PokemonRepository;
 import com.example.pokemoncopy5.repository.ReviewRepository;
 import com.example.pokemoncopy5.service.ReviewService;
@@ -48,6 +49,23 @@ public class ReviewServiceImpl implements ReviewService {
         List<Review> reviews = reviewRepository.findByPokemonId(pokemonId);
 
        return reviews.stream().map(review -> mapToDto(review)).collect(Collectors.toList());
+    }
+
+    @Override
+    public ReviewDto getPokemonReviewById(int pokemonId, int reviewId) {
+
+       Pokemon pokemon = pokemonRepository.findById(pokemonId)
+               .orElseThrow(()-> new PokemonNotFoundException("Pokemon with associated id not found"));
+
+       Review review = reviewRepository.findById(reviewId)
+               .orElseThrow(()-> new ReviewNotFoundException("Review with associated id not found"));
+
+       if(review.getPokemon().getId() != pokemon.getId()){
+
+           throw new ReviewNotFoundException("Review not found");
+       }
+
+       return mapToDto(review);
     }
 
     private ReviewDto mapToDto(Review review){
