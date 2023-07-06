@@ -33,8 +33,8 @@ public class SecurityConfig {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET)
-                .authenticated()
+                .antMatchers("/api/auth/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -44,7 +44,7 @@ public class SecurityConfig {
 
     }
 
-    @Bean
+ /*   @Bean
     public UserDetailsService users(){
 
         UserDetails admin = User.builder()
@@ -62,7 +62,7 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(admin,user);
 
     }
-
+*/
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 
