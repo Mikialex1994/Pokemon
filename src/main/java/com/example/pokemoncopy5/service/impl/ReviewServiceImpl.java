@@ -68,6 +68,49 @@ public class ReviewServiceImpl implements ReviewService {
        return mapToDto(review);
     }
 
+    @Override
+    public ReviewDto updateReview(int pokemonId, int reviewId, ReviewDto reviewDto) {
+
+        Pokemon pokemon = pokemonRepository.findById(pokemonId)
+                .orElseThrow(()-> new PokemonNotFoundException("Pokemon with associated id is not found"));
+
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(()-> new ReviewNotFoundException("Review with associated id not found"));
+
+        if(review.getPokemon().getId() != pokemon.getId()){
+
+            throw new ReviewNotFoundException("This review does not belong to a pokemon");
+
+        }
+
+        review.setTitle(reviewDto.getTitle());
+        review.setContent(reviewDto.getContent());
+        review.setStars(reviewDto.getStars());
+
+        Review newReview = reviewRepository.save(review);
+
+        return mapToDto(newReview);
+    }
+
+    @Override
+    public void deleteReviews(int pokemonId, int reviewId) {
+
+        Pokemon pokemon = pokemonRepository.findById(pokemonId)
+                .orElseThrow(()-> new PokemonNotFoundException("Pokemon with associated id is not found"));
+
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(()-> new ReviewNotFoundException("Review with associated id not found"));
+
+        if(review.getPokemon().getId() != pokemon.getId()){
+
+            throw new ReviewNotFoundException("This review does not belong to a pokemon");
+
+        }
+
+        reviewRepository.delete(review);
+
+    }
+
     private ReviewDto mapToDto(Review review){
 
         ReviewDto reviewDto = new ReviewDto();

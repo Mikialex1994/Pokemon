@@ -1,4 +1,4 @@
-package com.example.pokemoncopy5;
+package com.example.pokemoncopy5.repository;
 
 import com.example.pokemoncopy5.entity.Review;
 import com.example.pokemoncopy5.repository.ReviewRepository;
